@@ -1,13 +1,9 @@
 import ai_parser
 import discord
-from dotenv import load_dotenv
 from event import is_event, get_event
 from event_error import is_event_error, get_event_error
-import os
 import database
-
-load_dotenv()
-TOKEN = os.getenv('DISCORD_BOT_TOKEN')
+from consts.tokens import DISCORD_BOT_TOKEN
 
 allowed_channels = [1182195509297958952]
 
@@ -33,7 +29,7 @@ def run_bot():
     intents = discord.Intents.default()
     intents.message_content = True
     client = MyClient(intents=intents)
-    client.run(TOKEN)
+    client.run(DISCORD_BOT_TOKEN)
 
 if __name__ == "__main__":
     run_bot()

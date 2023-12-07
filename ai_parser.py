@@ -1,8 +1,6 @@
 from openai import OpenAI
 import mock_data
-import os
-from dotenv import load_dotenv
-load_dotenv()
+from consts.tokens import OPENAI_API_KEY
 
 system_content = '''You are given a message on Discord.
 You are to determine if it is an annoucement for an event. Reminder for deadlines are not events.
@@ -21,7 +19,7 @@ If it is not an event, output JSON with the field: reason_for_error.
 import json
 
 def parse_message(message: str) -> json:
-    client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+    client = OpenAI(api_key=OPENAI_API_KEY)
     try:
         response = client.chat.completions.create(
             model="gpt-3.5-turbo-1106",
