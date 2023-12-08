@@ -1,5 +1,5 @@
 import json
-
+from dateutil import parser
 from datetime import datetime
 
 class Event:
@@ -15,8 +15,8 @@ def is_event(parsed_message: json) -> bool:
 
 def get_event(parsed_message: json) -> Event:
     if is_event(parsed_message):
-        start_time = datetime.fromisoformat(parsed_message["data"]["start_time"])
-        end_time = datetime.fromisoformat(parsed_message["data"]["end_time"])
+        start_time = parser.parse(parsed_message["data"]["start_time"])
+        end_time = parser.parse(parsed_message["data"]["end_time"]) if parsed_message["data"]["end_time"] else None
         return Event(
             parsed_message["data"]["title"],
             start_time,
