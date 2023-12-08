@@ -1,7 +1,7 @@
 import os
-load_dotenv()
-from dotenv import load_dotenv
 import boto3
+from dotenv import load_dotenv
+load_dotenv()
 
 def get_parameter(param_name):
     """
