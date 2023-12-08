@@ -27,7 +27,6 @@ def get_parameter(param_name):
     )
     
     # Store the credentials in a variable
-    print(response)
     credentials = response['Parameters'][0]['Value']
 
     return credentials
