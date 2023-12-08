@@ -3,6 +3,8 @@ import boto3
 from dotenv import load_dotenv
 load_dotenv()
 
+AWS_PROD_HIERARCHY = "/uwclubs/prod/"
+
 def get_parameter(param_name):
     """
     This function reads a secure parameter from AWS' SSM service.
@@ -14,7 +16,7 @@ def get_parameter(param_name):
     ssm = boto3.client('ssm',
         region_name='us-east-2'
     )
-
+    param_name = AWS_PROD_HIERARCHY + param_name
     # Get the requested parameter
     response = ssm.get_parameters(
         Names=[

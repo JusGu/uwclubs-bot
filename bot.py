@@ -3,7 +3,7 @@ import discord
 from event import is_event, get_event
 from event_error import is_event_error, get_event_error
 import database
-from consts.tokens import DISCORD_BOT_TOKEN
+from consts.secrets import DISCORD_BOT_TOKEN
 
 allowed_channels = [1182195509297958952]
 

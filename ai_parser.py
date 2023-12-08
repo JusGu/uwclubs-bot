@@ -1,6 +1,6 @@
 from openai import OpenAI
 import mock_data
-from consts.tokens import OPENAI_API_KEY
+from consts.secrets import OPENAI_API_KEY
 
 system_content = '''You are given a message on Discord.
 You are to determine if it is an annoucement for an event. Reminder for deadlines are not events.

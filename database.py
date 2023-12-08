@@ -1,5 +1,5 @@
 from supabase import create_client, Client
-from consts.tokens import SUPABASE_URL, SUPABASE_KEY
+from consts.secrets import SUPABASE_URL, SUPABASE_KEY
 
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
