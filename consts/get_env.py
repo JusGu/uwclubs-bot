@@ -16,16 +16,18 @@ def get_parameter(param_name):
     ssm = boto3.client('ssm',
         region_name='us-east-2'
     )
-    param_name = AWS_PROD_HIERARCHY + param_name
-    # Get the requested parameter
+    lower_case_param_name = param_name.lower()
+    full_param_name = AWS_PROD_HIERARCHY + lower_case_param_name
+
     response = ssm.get_parameters(
         Names=[
-            param_name,
+            full_param_name,
         ],
         WithDecryption=True
     )
     
     # Store the credentials in a variable
+    print(response)
     credentials = response['Parameters'][0]['Value']
 
     return credentials
