@@ -7,7 +7,7 @@ You are to determine if it is an annoucement for an event. Reminder for deadline
 
 If it is an event, output JSON with the fields: title, start_time, end_time, description, and location.
 Keep the title as concise as possible.
-start_time and end_time are ISO 8601 strings.
+start_time and end_time are ISO 8601 strings and in EST unless otherwise specified.
 If there is no end time, end_time is null.
 Keep the description exactly as it is.
 Location can be online or in a physical location or null.
