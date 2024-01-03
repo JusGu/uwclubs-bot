@@ -4,19 +4,17 @@ from discord.ext import commands
 from event import is_event, get_event
 from event_error import is_event_error, get_event_error
 import database
-from consts.secrets import DISCORD_BOT_TOKEN
+from consts.secrets import DISCORD_BOT_TOKEN, DISCORD_BOT_ID
 from slash_commands.link import link
 from slash_commands.unlink import unlink
 from slash_commands.help import help
+from slash_commands.utils import channel_exists
 
 async def execute_admin_command(ctx: commands.Context, callback):
     if ctx.author.guild_permissions.administrator:
         await callback(ctx)
     else:
         await ctx.respond("You need to be an administrator to use this command.", ephemeral=True)
-
-def all_channels():
-    return database.select_channels().model_dump(mode="json")['data']
 
 class MyBot(commands.Bot):
     def __init__(self, *args, **kwargs):
@@ -38,7 +36,8 @@ class MyBot(commands.Bot):
         print('Logged on as', self.user)
 
     async def on_message(self, message: discord.Message):
-        if message.channel.id in [channel['channel_id'] for channel in all_channels()]:
+        print(message.author.id)
+        if message.author.id != DISCORD_BOT_ID and channel_exists(str(message.channel.id)):
             parsed_message = ai_parser.parse_message(message.content)
             if is_event(parsed_message):
                 event = get_event(parsed_message)
@@ -52,7 +51,9 @@ class MyBot(commands.Bot):
                 raise Exception("Message is neither an event nor an event error.")
 
 def get_bot():
-    bot = MyBot()
+    intents = discord.Intents.default()
+    intents.message_content = True
+    bot = MyBot(intents=intents)
     return bot
 
 if __name__ == "__main__":

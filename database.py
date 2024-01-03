@@ -54,5 +54,9 @@ def select_guild(guild_id: str):
     response = supabase.table("guilds").select("*").eq("guild_id", guild_id).is_("deleted_at", "NULL").execute()
     return response
 
+def delete_channel(channel_id: str):
+    response = supabase.table("channels").update({"deleted_at": "now()", "updated_at": "now()"}).eq("channel_id", channel_id).execute()
+    return response
+
 
 
