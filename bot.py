@@ -36,7 +36,6 @@ class MyBot(commands.Bot):
         print('Logged on as', self.user)
 
     async def on_message(self, message: discord.Message):
-        print(message.author.id)
         if message.author.id != DISCORD_BOT_ID and channel_exists(str(message.channel.id)):
             parsed_message = ai_parser.parse_message(message.content)
             if is_event(parsed_message):
