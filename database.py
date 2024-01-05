@@ -1,25 +1,31 @@
-from discord import TextChannel, Guild
+from discord import Message, TextChannel, Guild
 from supabase import create_client, Client
 from consts.secrets import SUPABASE_URL, SUPABASE_KEY
 from utils import create_shortname
 
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
-def insert_event(event):
+def insert_event(event, message: Message):
     event_data = {
         "title": event.title,
         "start_time": event.start_time.isoformat(),
         "end_time": event.end_time.isoformat(),
         "description": event.description,
-        "location": event.location
+        "location": event.location,
+        "message_id": str(message.id),
+        "channel_id": str(message.channel.id),
+        "guild_id": str(message.guild.id),
     }
     response = supabase.table("events").insert(event_data).execute()
     return response
 
-def insert_event_error(event_error):
+def insert_event_error(event_error, message: Message):
     event_error_data = {
         "original_message": event_error.original_message,
-        "reason_for_error": event_error.reason_for_error
+        "reason_for_error": event_error.reason_for_error,
+        "message_id": str(message.id),
+        "channel_id": str(message.channel.id),
+        "guild_id": str(message.guild.id),
     }
     response = supabase.table("event_errors").insert(event_error_data).execute()
     return response
