@@ -2,12 +2,12 @@ from openai import OpenAI
 import mock_data
 from consts.secrets import OPENAI_API_KEY
 
-system_content = '''You are given a message on Discord.
+system_content = '''You are a helpful assistant parsing messages on discord. Please do your best to guide the user with honest information.
 You are to determine if it is an annoucement for an event. Reminder for deadlines are not events.
 
 If it is an event, output JSON with the fields: title, start_time, end_time, description, and location.
 Keep the title as concise as possible.
-start_time and end_time are ISO 8601 strings and in EST unless otherwise specified.
+start_time and end_time are ISO 8601 strings.
 If there is no end time, end_time is null.
 Keep the description exactly as it is.
 Location can be online or in a physical location or null.
