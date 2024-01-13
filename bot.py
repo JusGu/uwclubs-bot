@@ -40,11 +40,11 @@ class MyBot(commands.Bot):
             parsed_message = ai_parser.parse_message(message.content)
             if is_event(parsed_message):
                 event = get_event(parsed_message)
-                response = database.insert_event(event)
+                response = database.insert_event(event, message)
                 print(response)
             elif is_event_error(parsed_message):
                 event_error = get_event_error(parsed_message)
-                response = database.insert_event_error(event_error)
+                response = database.insert_event_error(event_error, message)
                 print(response)
             else:
                 raise Exception("Message is neither an event nor an event error.")
