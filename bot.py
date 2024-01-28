@@ -9,6 +9,7 @@ from slash_commands.link import link
 from slash_commands.unlink import unlink
 from slash_commands.help import help
 from slash_commands.utils import channel_exists
+from slash_commands.status import status
 
 async def execute_admin_command(ctx: commands.Context, callback):
     if ctx.author.guild_permissions.administrator:
@@ -31,6 +32,10 @@ class MyBot(commands.Bot):
         @self.slash_command(name="help", description="View a list of bot commands and what they do.")
         async def help_command(ctx: commands.Context):
             await help(ctx)
+
+        @self.slash_command(name="status", description="View a list of currently linked channels.")
+        async def status_command(ctx: commands.Context):
+            await status(ctx)
 
     async def on_ready(self):
         print('Logged on as', self.user)

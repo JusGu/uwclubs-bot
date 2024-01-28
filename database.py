@@ -48,8 +48,12 @@ def insert_guild(guild: Guild):
     response = supabase.table("guilds").insert(guild_data).execute()
     return response
 
-def select_channel(channel_id: str):
+def select_channel_by_channel_id(channel_id: str):
     response = supabase.table("channels").select("*").eq("channel_id", channel_id).is_("deleted_at", "NULL").execute()
+    return response
+
+def select_channel_by_guild_id(guild_id: str):
+    response = supabase.table("channels").select("*").eq("guild_id", guild_id).is_("deleted_at", "NULL").execute()
     return response
 
 def select_channels():
