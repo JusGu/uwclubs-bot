@@ -1,6 +1,6 @@
 from discord.ext import commands
 import database
-from slash_commands.utils import guild_exists, channel_exists
+from slash_commands.utils import guild_exists, channel_is_linked
 
 async def link(ctx: commands.Context):
     await ctx.respond("Linking...", ephemeral=True)
@@ -10,7 +10,7 @@ async def link(ctx: commands.Context):
         database.insert_guild(guild)
         database.insert_channel(channel)
         await ctx.respond(f"Welcome to UWClubs! This channel, <#{channel.id}> is now linked to UWClubs. All events posted in this channel will be added to the UWClubs website.", ephemeral=True)
-    elif not channel_exists(str(channel.id)):
+    elif not channel_is_linked(str(channel.id)):
         database.insert_channel(channel)
         await ctx.respond(f"This channel, <#{channel.id}> is now linked to UWClubs. All events posted in this channel will be added to the UWClubs website.", ephemeral=True)
     else:

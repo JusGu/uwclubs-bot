@@ -1,6 +1,6 @@
 import database
 
-def channel_exists(channel_id: str):
+def channel_is_linked(channel_id: str):
     channel_response = database.select_channel_by_channel_id(channel_id).model_dump(mode="json")
     return len(channel_response['data']) > 0
 
