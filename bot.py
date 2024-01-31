@@ -4,8 +4,8 @@ from discord.ext import commands
 from event import is_event, get_event
 from event_error import is_event_error, get_event_error
 import database
-from consts.secrets import DISCORD_BOT_TOKEN, DISCORD_BOT_ID
-from slash_commands import link, unlink, help, status
+from consts.secrets import DISCORD_BOT_TOKEN
+from slash_commands.slash_commands import link, unlink, help, status
 from slash_commands.utils import channel_is_linked
 from on_message.handler import handle_message
 
@@ -37,12 +37,17 @@ class MyBot(commands.Bot):
     async def on_ready(self):
         print('Logged on as', self.user)
     async def on_message(self, message: discord.Message):
-        if message.author.id != DISCORD_BOT_ID and channel_is_linked(str(message.channel.id)):
-            handle_message(self, message)
+        if message.author == self.user:
+            return
+        if channel_is_linked(str(message.channel.id)):
+            await handle_message(self, message)
 
 def get_bot():
-    intents = discord.Intents.default()
+    intents = discord.Intents.none()
+    intents.messages = True
     intents.message_content = True
+    intents.reactions = True
+    intents.guilds = True
     bot = MyBot(intents=intents)
     return bot
 
