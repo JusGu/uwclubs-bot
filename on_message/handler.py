@@ -3,6 +3,7 @@ from event import is_event, get_event
 from event_error import is_event_error, get_event_error
 import database
 import discord
+from on_message.confirmation import send_confirmation_message
 
 async def handle_message(self, message: discord.Message):
     await message.add_reaction("🔄")
@@ -11,7 +12,7 @@ async def handle_message(self, message: discord.Message):
         event = get_event(parsed_message)
         response = database.insert_event(event, message)
         print(response)
-        await message.author.send(f'Your event has been successfully inserted. You can view it at https://www.uwclubs.com/events/{message.id}', view=MyView())
+        await send_confirmation_message(message.author, message.id)
     elif is_event_error(parsed_message):
         event_error = get_event_error(parsed_message)
         response = database.insert_event_error(event_error, message)
