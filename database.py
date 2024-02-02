@@ -41,7 +41,7 @@ def insert_channel(channel: TextChannel):
 def insert_guild(guild: Guild):
     guild_data = {
         "guild_id": str(guild.id),
-        "fullname": guild.name,
+        "full_name": guild.name,
         "shortname": create_shortname(guild.name),
         "description": guild.description
     }
