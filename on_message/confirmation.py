@@ -1,4 +1,5 @@
 from discord import ButtonStyle, Interaction, ui
+from consts.get_env import is_prod
 import database
 
 class ViewButton(ui.Button):
@@ -48,6 +49,12 @@ class DeleteButton(ui.Button):
         )
         await interaction.response.send_message(response_message, view=view, ephemeral=True)
 
+def getLink():
+    if is_prod():
+        return "https://www.uwclubs.com"
+    else:
+        return "https://staging.uwclubs.com/"
+        
 async def send_confirmation_message(author, message_id):
     view = ui.View()
     view.add_item(ViewButton(f"https://www.uwclubs.com/events/{message_id}"))
@@ -58,7 +65,7 @@ async def send_confirmation_message(author, message_id):
         f"**Hello {author.name},**\n\n"
         "Your event has been successfully inserted. "
         "You can manage your event using the buttons below.\n\n"
-        f"**Event Link:** [Click Here](https://www.uwclubs.com/events/{message_id})"
+        f"**Event Link:** [Click Here]({getLink()}events/{message_id})"
     )
 
     await author.send(content=confirmation_message, view=view)
