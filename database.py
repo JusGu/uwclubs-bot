@@ -42,7 +42,7 @@ def insert_guild(guild: Guild):
     guild_data = {
         "guild_id": str(guild.id),
         "full_name": guild.name,
-        "shortname": create_shortname(guild.name),
+        "short_name": create_shortname(guild.name),
         "description": guild.description
     }
     response = supabase.table("guilds").insert(guild_data).execute()
