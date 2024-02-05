@@ -9,13 +9,15 @@ def insert_event(event, message: Message):
     event_data = {
         "title": event.title,
         "start_time": event.start_time.isoformat(),
-        "end_time": event.end_time.isoformat(),
         "description": event.description,
         "location": event.location,
         "message_id": str(message.id),
         "channel_id": str(message.channel.id),
         "guild_id": str(message.guild.id),
     }
+    if event.end_time:
+        event_data["end_time"] = event.end_time.isoformat()
+        
     response = supabase.table("events").insert(event_data).execute()
     return response
 

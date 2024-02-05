@@ -51,7 +51,7 @@ class DeleteButton(ui.Button):
 
 def getLink():
     if is_prod():
-        return "https://www.uwclubs.com"
+        return "https://www.uwclubs.com/"
     else:
         return "https://staging.uwclubs.com/"
         
