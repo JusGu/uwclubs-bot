@@ -3,6 +3,7 @@ import mock_data
 from consts.secrets import OPENAI_API_KEY
 from datetime import datetime
 from zoneinfo import ZoneInfo
+import pytz
 
 current_date = datetime.now().strftime("%B %d, %Y")
 system_content = f'''You are a helpful assistant parsing messages on discord as of {current_date}. Please do your best to guide the user with honest information.
@@ -23,7 +24,8 @@ import json
 
 def to_est_tz(iso_string):
     dt_naive = datetime.fromisoformat(iso_string)
-    dt_est = dt_naive.replace(tzinfo=ZoneInfo("America/New_York"))
+    tz_ny = pytz.timezone("America/New_York")
+    dt_est = tz_ny.localize(dt_naive)
     return dt_est.strftime('%Y-%m-%d %H:%M:%S%z')
 
 def convert_event_to_est(event: dict) -> dict:
