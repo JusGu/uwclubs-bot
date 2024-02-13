@@ -50,6 +50,20 @@ def insert_guild(guild: Guild):
     response = supabase.table("guilds").insert(guild_data).execute()
     return response
 
+def edit_event(event: str, message: Message):
+    event_data = {
+        "title": event.title,
+        "start_time": event.start_time.isoformat(),
+        "description": event.description,
+        "location": event.location,
+    }
+    if event.end_time:
+        event_data["end_time"] = event.end_time.isoformat()
+    response = supabase.table("events").update(event_data).eq("message_id", message.id).execute()
+    return response
+
+
+
 def select_channel_by_channel_id(channel_id: str):
     response = supabase.table("channels").select("*").eq("channel_id", channel_id).is_("deleted_at", "NULL").execute()
     return response
