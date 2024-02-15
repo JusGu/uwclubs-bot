@@ -11,6 +11,7 @@ def insert_event(event, message: Message):
         "start_time": event.start_time.isoformat(),
         "description": event.description,
         "location": event.location,
+        "recurring": event.recurring,
         "message_id": str(message.id),
         "channel_id": str(message.channel.id),
         "guild_id": str(message.guild.id),
