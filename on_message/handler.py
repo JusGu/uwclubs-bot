@@ -8,7 +8,7 @@ from on_message.confirmation import send_edit_confirmation_message
 
 async def handle_message(self, message: discord.Message):
     await message.add_reaction("🔄")
-    parsed_message = ai_parser.parse_message(message.content)
+    parsed_message = ai_parser.parse_message(message)
     if is_event(parsed_message):
         event = get_event(parsed_message)
         response = database.insert_event(event, message)
