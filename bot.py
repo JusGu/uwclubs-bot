@@ -8,6 +8,7 @@ from consts.secrets import DISCORD_BOT_TOKEN
 from slash_commands.slash_commands import link, unlink, help, status
 from slash_commands.utils import channel_is_linked
 from on_message.handler import handle_message
+from on_message.handler import handle_message_edit
 
 async def execute_admin_command(ctx: commands.Context, callback):
     if ctx.author.guild_permissions.administrator:
@@ -41,6 +42,14 @@ class MyBot(commands.Bot):
             return
         if channel_is_linked(str(message.channel.id)):
             await handle_message(self, message)
+    
+    async def on_message_edit(self, before: discord.Message, after: discord.Message):
+        if after.author == self.user:
+            return
+        if channel_is_linked(str(after.channel.id)):
+            await handle_message_edit(self, before, after)
+    
+    
 
 def get_bot():
     intents = discord.Intents.none()
