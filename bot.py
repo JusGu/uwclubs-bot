@@ -1,9 +1,5 @@
-import ai_parser
 import discord
 from discord.ext import commands
-from event import is_event, get_event
-from event_error import is_event_error, get_event_error
-import database
 from consts.secrets import DISCORD_BOT_TOKEN
 from slash_commands.slash_commands import link, unlink, help, status
 from slash_commands.utils import channel_is_linked
@@ -43,11 +39,11 @@ class MyBot(commands.Bot):
         if channel_is_linked(str(message.channel.id)):
             await handle_message(self, message)
     
-    async def on_message_edit(self, before: discord.Message, after: discord.Message):
-        if after.author == self.user:
-            return
-        if channel_is_linked(str(after.channel.id)):
-            await handle_message_edit(self, before, after)
+    # async def on_message_edit(self, before: discord.Message, after: discord.Message):
+    #     if after.author == self.user:
+    #         return
+    #     if channel_is_linked(str(after.channel.id)):
+    #         await handle_message_edit(self, before, after)
     
     
 
