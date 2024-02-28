@@ -5,6 +5,7 @@ import database
 import discord
 from on_message.confirmation import send_confirmation_message
 from on_message.confirmation import send_edit_confirmation_message
+from on_message.thread import create_confirmation_thread
 
 async def handle_message(self, message: discord.Message):
     await message.add_reaction("🔄")
@@ -13,7 +14,8 @@ async def handle_message(self, message: discord.Message):
         event = get_event(parsed_message)
         response = database.insert_event(event, message)
         print(response)
-        await send_confirmation_message(message.author, message.id)
+        await send_confirmation_message(event, message)
+        await create_confirmation_thread(event, message)
     elif is_event_error(parsed_message):
         event_error = get_event_error(parsed_message)
         response = database.insert_event_error(event_error, message)

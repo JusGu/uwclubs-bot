@@ -35,6 +35,12 @@ def get_parameter(param_name, prod: bool = False):
 def is_prod():
     return os.getenv('DISCORD_BOT_PROD') == 'true'
 
+def get_link():
+    if is_prod():
+        return "https://www.uwclubs.com/"
+    else:
+        return "https://staging.uwclubs.com/"
+
 def get_env(param_name: str):
     prod = is_prod()
     env_param_name = 'PROD_' + param_name if prod else 'DEV_' + param_name
