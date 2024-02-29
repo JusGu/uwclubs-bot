@@ -9,6 +9,7 @@ async def create_confirmation_thread(event: Event, message: discord.Message):
     thread = await message.create_thread(name=event.title, auto_archive_duration=60)
     view = ui.View()
     view.add_item(ViewButton(f"{get_link()}events/{message.id}"))
+
     text = "Your event has been successfully created."
     embed = create_event_embed(event, message)
 

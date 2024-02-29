@@ -40,6 +40,15 @@ def get_link():
         return "https://www.uwclubs.com/"
     else:
         return "https://staging.uwclubs.com/"
+    
+def get_event_link(message_id: int, server_id: int = None):
+    if is_prod():
+        link = f"https://www.uwclubs.com/events/{message_id}?source=discord"
+        if server_id is not None:
+            link += f"&server_id={server_id}"
+    else:
+        link = f"https://staging.uwclubs.com/events/{message_id}"
+    return link
 
 def get_env(param_name: str):
     prod = is_prod()
