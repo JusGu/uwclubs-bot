@@ -41,7 +41,7 @@ class DeleteButton(ui.Button):
         self.event_id = event_id
 
     async def callback(self, interaction: Interaction):
-        view = ui.View()
+        view = ui.View(timeout=None)
         view.add_item(CancelDeleteButton())
         view.add_item(ConfirmDeleteButton(self.event_id))
         response_message = (
