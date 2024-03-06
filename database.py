@@ -57,7 +57,7 @@ def get_all_events_description_and_message_id():
     if response.get('error') is not None:
         raise Exception(f"Supabase API error: {response['error']}")
     
-    data = response['data']
+    data = response.data
 
     eventTuples = [(row['description'], (row['message_id'])) for row in data]
 
