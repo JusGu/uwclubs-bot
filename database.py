@@ -82,15 +82,6 @@ def create_edit_event_form(event_id: str):
         "item_id": event_id,
         "secret": create_secret()
     }
-
-    # if form already exists, generate new secret & renew expiry
-    existing_form = supabase.table("forms").select("*").match({"item_id": form_data["item_id"], "item": form_data["item"], "action": form_data["action"]}).execute()
-    if existing_form.data:
-        existing_form_id = existing_form.data[0]["id"]
-        response = supabase.table("forms").update({"secret": form_data['secret'], "updated_at": "now()"}).eq("id", existing_form_id).execute()
-        return response
-    
-    # otherwise create new form
     response = supabase.table("forms").insert(form_data).execute()
     return response
 
