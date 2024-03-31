@@ -1,7 +1,7 @@
 from discord import Message, TextChannel, Guild
 from supabase import create_client, Client
 from consts.secrets import SUPABASE_URL, SUPABASE_KEY
-from utils import create_shortname
+from utils import create_shortname, create_secret
 
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
@@ -75,6 +75,15 @@ def edit_event(event: str, message: Message):
     response = supabase.table("events").update(event_data).eq("message_id", message.id).execute()
     return response
 
+def create_edit_event_form(event_id: str):
+    form_data = {
+        "action": "edit",
+        "item": "event",
+        "item_id": event_id,
+        "secret": create_secret()
+    }
+    response = supabase.table("forms").insert(form_data).execute()
+    return response
 
 
 def select_channel_by_channel_id(channel_id: str):
@@ -100,6 +109,3 @@ def delete_event(event_id: str):
 def delete_channel(channel_id: str):
     response = supabase.table("channels").update({"deleted_at": "now()", "updated_at": "now()"}).eq("channel_id", channel_id).execute()
     return response
-
-
-

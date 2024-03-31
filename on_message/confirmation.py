@@ -8,7 +8,7 @@ from event import Event
 async def send_confirmation_message(event: Event, message: Message):
     view = ui.View(timeout=None)
     view.add_item(ViewButton(get_event_link(message.id)))
-    view.add_item(EditButton())
+    view.add_item(EditButton(message.id))
     view.add_item(DeleteButton(message.id))
 
     confirmation_message = (
@@ -23,7 +23,7 @@ async def send_confirmation_message(event: Event, message: Message):
 async def send_edit_confirmation_message(author, message_id):
     view = ui.View(timeout=None)
     view.add_item(ViewButton(f"{get_event_link(message_id)}"))
-    view.add_item(EditButton())
+    view.add_item(EditButton(message_id))
     view.add_item(DeleteButton(message_id))
 
     confirmation_message = (

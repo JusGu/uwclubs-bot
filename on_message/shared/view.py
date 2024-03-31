@@ -9,15 +9,17 @@ class ViewButton(ui.Button):
         super().__init__(style=ButtonStyle.link, label="View Event", url=url)
 
 class EditButton(ui.Button):
-    def __init__(self):
+    def __init__(self, event_id):
         super().__init__(style=ButtonStyle.primary, label="Edit", emoji="✏️")
+        self.event_id = event_id
 
     async def callback(self, interaction: Interaction):
-        response_message = (
-            'You clicked Edit! '
-            'Please message <@1176403517288755231> to edit your event.'
-        )
-        await interaction.response.send_message(response_message)
+        database.create_edit_event_form(self.event_id)
+        response = database.create_edit_event_form(self.event_id)
+        form_id = response.data[0]["id"]
+        form_secret = response.data[0]["secret"]
+        form_url = f"https://uwclubs.com/events/edit?form={form_id}&secret={form_secret}"
+        await interaction.response.send_message(f"You can edit your event here: [Edit Form]({form_url}). This link will expire in 10 minutes.")
 
 class ConfirmDeleteButton(ui.Button):
     def __init__(self, event_id):

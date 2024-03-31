@@ -1,3 +1,5 @@
+import secrets
+
 def create_shortname(fullname: str):
     lowercase_fullname = fullname.lower()
     cleaned_fullname = ''.join(e if e.isalnum() or e.isspace() else ' ' for e in lowercase_fullname)
@@ -5,5 +7,5 @@ def create_shortname(fullname: str):
     shortname = "-".join(filtered_words)
     return shortname
 
-
-
+def create_secret():
+    return secrets.token_urlsafe(16)
