@@ -18,7 +18,7 @@ class EditButton(ui.Button):
         response = database.create_edit_event_form(self.event_id)
         form_id = response.data[0]["id"]
         form_secret = response.data[0]["secret"]
-        form_url = f"https://uwclubs.com/form/{form_id}?secret={form_secret}"
+        form_url = f"https://uwclubs.com/events/edit?form={form_id}&secret={form_secret}"
         await interaction.response.send_message(f"You can edit your event here: [Edit Form]({form_url}). This link will expire in 10 minutes.")
 
 class ConfirmDeleteButton(ui.Button):
